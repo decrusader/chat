@@ -103,7 +103,7 @@
 
         console.log(name);
         console.log(message);
-        fetch("http://10.30.160.226:8001/message", {
+        fetch("http://topvak-chatapp-env.eba-37rjgxaz.eu-west-1.elasticbeanstalk.com/message", {
 
             method: "POST",
             body: JSON.stringify({
@@ -134,7 +134,7 @@
     document.querySelector(".form").addEventListener("submit", onsubmit)
 
     function getMessages() {
-        fetch("http://10.30.160.226:8001/messages")
+        fetch("http://topvak-chatapp-env.eba-37rjgxaz.eu-west-1.elasticbeanstalk.com/messages")
             .then((response) => response.json())
             .then((result) => Toonmessages(result))
             .catch((error) => console.error(error));

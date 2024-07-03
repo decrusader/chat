@@ -46,7 +46,7 @@
 
     input[type=text],
     select {
-        width: 80%;
+        width: 75%;
         padding: 10px 10px;
         display: inline-block;
         border: 1px solid #ccc;
@@ -54,13 +54,9 @@
         box-sizing: border-box;
     }
 
-    .custom-button {
-        width: 25px;
-        /* Set the width of the button */
-        height: 25px;
-        /* Set the height of the button */
-        font-size: 25px;
-        /*Set the font size of the text inside*/
+    button {
+        width: 120px;
+        height: 39px;
     }
 
     .container-messages {}
@@ -89,8 +85,8 @@
 
         </div>
         <footer>
-            <label for="message">Your message:<span><input type="text" id="message" name="message"></span><span><button
-                        class="submit">verzenden</button></span><br></span></label><br>
+            <label for="message">Enter your message:<span><input type="text" id="message" name="message"></span><span><button
+                        class="button">verzenden</button></span><br></span></label><br>
         </footer>
     </form>
 </body>
@@ -116,7 +112,7 @@
             headers: myHeaders
         }
         ).then(function () {
-            document.querySelector("#message").value= '';
+            document.querySelector("#message").value = '';
         })
     }
     function Toonmessages(messages) {

@@ -2,13 +2,68 @@
 <html lang="nl">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+    body {
+        margin: 0;
+    }
+
+    .columns-2 {
+        display: grid;
+        grid-template-rows: 1 fr;
+        grid-template-columns: 20rem 1fr;
+        height: 80vh;
+
+
+    }
+
     header {
         background-color: #666;
         padding: 30px;
-        text-align: center;
         font-size: 35px;
         color: white;
+        float: left;
     }
+
+    nav {
+        text-align: center;
+        /* only for demonstration, should be removed */
+        background: #ccc;
+        padding: 5px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        padding: left 1rem;
+        overflow-y: scroll;
+        /* height: 80vh; */
+
+        font-size: 35px;
+    }
+
+    footer {
+        background-color: #777;
+        color: white;
+        height: 20vh;
+        font-size: 35px;
+    }
+
+    input[type=text],
+    select {
+        width: 80%;
+        padding: 10px 10px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .custom-button {
+        width: 250px;
+        /* Set the width of the button */
+        height: 200px;
+        /* Set the height of the button */
+        font-size: 32px;
+        /*Set the font size of the text inside*/
+    }
+
+    .container-messages {}
 </style>
 
 <head>
@@ -18,15 +73,26 @@
 </head>
 
 <body>
-    <header>
-        <form action="" id="form">
-            <label for="name">Your name:</label><br>
-            <input type="text" id="name" name="name"><br>
+    <form action="" class="form">
+        <div class="columns-2">
+            <header>
 
-            <label for="message">Your message:</label><br>
-            <input type="text" id="message" name="message"><span><input type="submit" id="Submit"></span><br>
-        </form>
-    </header>
+                <label for="name">Your name:</label><br>
+                <input type="text" id="name" name="name"><br>
+
+            </header>
+            <nav>
+                <h1>Messages:</h1>
+                <div class=".container-messages" id="messages-container">
+                </div>
+            </nav>
+
+        </div>
+        <footer>
+            <label for="message">Your message:<span><input type="text" id="message" name="message"></span><span><button
+                        class="submit">verzenden</button></span><br></span></label><br>
+        </footer>
+    </form>
 </body>
 
 <script>
@@ -49,16 +115,35 @@
             }),
             headers: myHeaders
         }
-        );
+        ).then(function () {
+            document.querySelector("#message").value= '';
+        })
+    }
+    function Toonmessages(messages) {
+        console.log(messages);
+        const container = document.getElementById("messages-container");
+        container.innerHTML = ""
+
+        for (let index = 0; index < messages.length; index++) {
+            const message = messages[index];
+
+            console.log(message);
+
+            const messageElement = `<p>${message.author} om ${message.timestamp}: ${message.message}</p>`
+            container.innerHTML += messageElement;
+        }
     }
 
-    document.querySelector("#form").addEventListener("submit", onsubmit)
+    document.querySelector(".form").addEventListener("submit", onsubmit)
 
-    fetch("http://10.30.160.226:8001/messages")
-        .then((Response)=> response.json())
-        .then((result) => consol.log(result))
-        .catch((error) => console.error(error));
-    
+    function getMessages() {
+        fetch("http://10.30.160.226:8001/messages")
+            .then((response) => response.json())
+            .then((result) => Toonmessages(result))
+            .catch((error) => console.error(error));
+    }
+
+    setInterval(getMessages, 1000)
 </script>
 
 </html>
